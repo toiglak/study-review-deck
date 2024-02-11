@@ -54,7 +54,7 @@ function create_button({ title, onclick }) {
   let button = document.createElement("button");
   button.innerHTML = title;
   button.onclick = onclick;
-  // Prevent buttons from affecting leyout when hovered.
+  // Prevent buttons from affecting layout when hovered.
   button.style.border = "1px solid transparent";
   return button;
 }
