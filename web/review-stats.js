@@ -3,7 +3,7 @@ const ADDON_PREFIX = "study_review_deck_buttons_addon";
 function main() {
   on_added(".new-count", async (element) => {
     let learned_today = await cmd("get_learned_today_count");
-    element.textContent += `(${learned_today})`;
+    if (learned_today !== 0) element.textContent += `(${learned_today})`;
   });
 }
 
