@@ -71,7 +71,11 @@ function pre(string) {
   return `${ADDON_PREFIX}_${string}`;
 }
 
-// Send a command to the Anki addon.
-function cmd(command, ...arg) {
-  pycmd(pre(command) + ":" + arg.join(":"));
+// Send a command to the Anki addon. You can await for the return value.
+async function cmd(command, ...arg) {
+  return new Promise((resolve, _reject) => {
+    pycmd(pre(command) + ":" + arg.join(":"), (ret) => {
+      resolve(ret);
+    });
+  });
 }

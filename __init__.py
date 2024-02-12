@@ -1,6 +1,7 @@
 from aqt import mw, gui_hooks
 from aqt.webview import WebContent
 from aqt.deckbrowser import DeckBrowser
+from aqt.reviewer import ReviewerBottomBar
 from anki.decks import DeckId
 from typing import Any, Optional
 
@@ -19,17 +20,17 @@ def handle_pycmd(handled, cmd, context):
         _, deck_id = cmd.split(":")
         start_review(int(deck_id))
         return (True, None)
+    if cmd.startswith(pre("get_learned_today_count")):
+        # TODO: Ensure that today == today?
+        learned_today = mw.col.decks.current()['newToday'][1]
+        return (True, learned_today)
 
     return handled
 
 def start_study(deck_id: int):
     # Get the current deck
     current_deck = mw.col.decks.get(DeckId(deck_id))
-
-    # TODO: Consider using deck's value for how many cards should be learned.
-    # How many new cards were learned today in total.
-    # total_new = current_deck['newToday'][1]
-    
+ 
     today = mw.col.sched.today
     # Set "New Cards" value for "Today Only".
     current_deck['newLimitToday'] = {'limit': 10000, 'today': today}
@@ -76,12 +77,16 @@ def reset_limits():
 # Append script that adds buttons to the deck browser.
 def on_webview(web_content: WebContent, context: Optional[Any]) -> None:
     global REFRESH_VIEW
+
     if isinstance(context, DeckBrowser):
         if REFRESH_VIEW:
             reset_limits()
             REFRESH_VIEW = False
             mw.moveToState("deckBrowser")
-        web_content.js.append(f"{WEB_DIRECTORY}/script.js")
+        web_content.js.append(f"{WEB_DIRECTORY}/list-buttons.js")
+
+    if isinstance(context, ReviewerBottomBar):
+        web_content.js.append(f"{WEB_DIRECTORY}/review-stats.js")
 
 # Setup addon.
 REFRESH_VIEW = False
