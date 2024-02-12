@@ -26,11 +26,11 @@ def start_study(deck_id: int):
     # Get the current deck
     current_deck = mw.col.decks.get(DeckId(deck_id))
 
-    # Days since the deck was created.
-    today = current_deck['timeToday'][0]
+    # TODO: Consider using deck's value for how many cards should be learned.
     # How many new cards were learned today in total.
-    total_new = current_deck['newToday'][1]
+    # total_new = current_deck['newToday'][1]
     
+    today = mw.col.sched.today
     # Set "New Cards" value for "Today Only".
     current_deck['newLimitToday'] = {'limit': 10000, 'today': today}
     # Set "Review Cards" value for "Today Only".
@@ -48,10 +48,8 @@ def start_study(deck_id: int):
 def start_review(deck_id: int):
     # Get the current deck
     current_deck = mw.col.decks.get(DeckId(deck_id))
-    
-    # Days since the deck was created.
-    today = current_deck['timeToday'][0]
-    
+
+    today = mw.col.sched.today 
     # Set "New Cards" value for "Today Only".
     current_deck['newLimitToday'] = {'limit': 0, 'today': today}
     # Set "Review Cards" value for "Today Only".
