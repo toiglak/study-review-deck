@@ -9,14 +9,14 @@ ADDON_PREFIX = "study_review_deck_buttons_addon"
 WEB_DIRECTORY = f"/_addons/{mw.addonManager.addonFromModule(__name__)}/web"
 
 def handle_pycmd(handled, cmd, context):
-    global REFRESH_VIEW
+    global REFRESH_DECKS
     if cmd.startswith(pre("start_study")):
-        REFRESH_VIEW = True
+        REFRESH_DECKS = True
         _, deck_id = cmd.split(":")
         start_study(int(deck_id))
         return (True, None)
     if cmd.startswith(pre("start_review")):
-        REFRESH_VIEW = True
+        REFRESH_DECKS = True
         _, deck_id = cmd.split(":")
         start_review(int(deck_id))
         return (True, None)
@@ -74,22 +74,24 @@ def reset_limits():
         deck['reviewLimitToday'] = { 'limit': 0, 'today': 0 }
         mw.col.decks.save(deck)
 
-# Append script that adds buttons to the deck browser.
 def on_webview(web_content: WebContent, context: Optional[Any]) -> None:
-    global REFRESH_VIEW
+    global REFRESH_DECKS
 
+    # Append script that adds buttons to the deck browser.
     if isinstance(context, DeckBrowser):
-        if REFRESH_VIEW:
+        if REFRESH_DECKS:
             reset_limits()
-            REFRESH_VIEW = False
+            REFRESH_DECKS = False
             mw.moveToState("deckBrowser")
         web_content.js.append(f"{WEB_DIRECTORY}/list-buttons.js")
 
+    # Append script that shows "learned today" number next to the
+    # new cards count in the stats (bottom bar).
     if isinstance(context, ReviewerBottomBar):
         web_content.js.append(f"{WEB_DIRECTORY}/review-stats.js")
 
 # Setup addon.
-REFRESH_VIEW = False
+REFRESH_DECKS = False
 mw.addonManager.setWebExports(__name__, r"web/.*")
 gui_hooks.webview_will_set_content.append(on_webview)
 gui_hooks.webview_did_receive_js_message.append(handle_pycmd)
@@ -102,6 +104,6 @@ gui_hooks.webview_did_receive_js_message.append(handle_pycmd)
 def print_console(arg):
     mw.web.eval(f'console.log(`{arg}`)')
 
-# Prefix string with a unique addon identifier to avoid name collisions.
+# Prefix string with the addon identifier to avoid name collisions.
 def pre(string: str):
     return f"{ADDON_PREFIX}_{string}"
