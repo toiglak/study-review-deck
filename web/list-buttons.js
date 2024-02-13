@@ -56,6 +56,7 @@ function create_button({ title, onclick }) {
   button.onclick = onclick;
   // Prevent buttons from affecting layout when hovered.
   button.style.border = "1px solid transparent";
+  button.style.cursor = "pointer";
   return button;
 }
 
