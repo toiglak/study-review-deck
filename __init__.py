@@ -21,8 +21,11 @@ def handle_pycmd(handled, cmd, context):
         start_review(int(deck_id))
         return (True, None)
     if cmd.startswith(pre("get_learned_today_count")):
-        # TODO: Ensure that today == today?
-        learned_today = mw.col.decks.current()['newToday'][1]
+        today = mw.col.sched.today
+        learned_today = 0
+        current_deck = mw.col.decks.current()
+        if current_deck['newToday'][0] == today:
+            learned_today = current_deck['newToday'][1]
         return (True, learned_today)
 
     return handled
