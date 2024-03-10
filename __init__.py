@@ -11,6 +11,9 @@ WEB_DIRECTORY = f"/_addons/{mw.addonManager.addonFromModule(__name__)}/web"
 def handle_pycmd(handled, cmd, context):
     global STATE
 
+    if mw.col.sched.version != 3:
+        raise Exception("This addon only works with the v3 scheduler.")
+
     if cmd.startswith(pre("start_study")):
         _, deck_id = cmd.split(":")
         start_study(int(deck_id))
