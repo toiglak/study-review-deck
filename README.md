@@ -1,41 +1,35 @@
+Compatible with Anki versions: 2.1.61 and above
 
 ---
 
-This add-on allows you to separate the study and review phases of your Anki sessions, by adding "Study" and "Review" buttons for each deck in the main window.
+# Study-Review Deck
 
-When you click "Study", you will start a session with only new cards. When you click "Review", you will start a session with only cards that are due for review. This is useful when you want to study new cards without being interrupted by reviews.
+This add-on allows you to separate the study and review phases of your Anki sessions, by adding "Study" and "Review" buttons for each deck. It is useful when you want to study new cards without being interrupted by reviews.
 
-> TODO: Reword above paragraph. We could just leave "This is useful when you want to study new cards without being interrupted by reviews" without explaining what "Study" and "Review" buttons do, since it's already explained in the first paragraph ("separate the study and review phases of your Anki sessions").
+![Main window showing "Study" and "Review" buttons](deck-view.png)
 
-> TODO: Add image of the main window (without morphman and heatmap).
+Clicking "Review" initiates a session with only the cards due for review. \
+Clicking "Study" starts a session with only new cards.
 
----
+During a study session, a "Wrap Up" (🏁) button appears next to the "Show Answer" button. This button removes new cards from the queue, allowing you to review the remaining cards and finish the session. This is especially useful when you have a large number of new cards in a deck.
 
-Additionally, in the study session, a "Wrap Up" (🏁) button is added. Pressing this button will remove new cards from the queue, allowing you to review the remaining words and wrap up the session.
-
-This add-on also shows the number of new cards learned today above the "Show Answer" button, so that you can decide when to wrap up your studies.
-
-> TODO: Add image of the study session (without morphman).
+![Study session showing "Wrap Up" button](study-session-arrows.png)
 
 
-## Compatibility warning
+## Installation
 
-This add-on requires Scheduler V3 (because it works by setting "Today Only" limit for new/review cards). It should be compatible with Anki versions X and later.
+1. Optional but recommended: [Create a backup](https://docs.ankiweb.net/backups.html#manual-colpkg-backups) of your collection.
+2. Make sure that you're using Scheduler V3.
+3. Download and install the add-on, then restart Anki.
+4. Enable "New cards ignore review limit" option for all your decks. Otherwise new cards won't appear in the study session.
 
+## Important Information
 
----
+- This add-on operates by setting "Today only" daily limit for new cards and reviews. If you decide to uninstall this add-on, you may need to manually reset these limits in the deck options.
+- Syncing with AnkiWeb during a session may hide today's reviews (as the "Today's limit" will still be set). If this happens, return to the main view (with the deck list) and then sync.
+- The "Study" button does not currently support nested decks.
+- I've shared this add-on because I find it useful, but please note that there may be bugs or things I didn't account for. Also, while it works for me, it may not fit your workflow. Use at your own discretion.
 
-# TODO: Before releasing to AnkiWeb
+## License
 
-- [ ] Nested decks
-    - When studying, new cards will only appear if any of the subdecks has new cards set. However, since we set limts for all decks to 0 (including subdecks), parent deck won't show any new cards.
-    - Solution: Remove limits for all subdecks when pressing "study" or "review" in the parent deck.
-      - Reasoning: the point of this plugin is "user wants to study cards from one of the decks specifically". If they click on a nested deck, then they obviously want to study cards from all of its subdecks.
-
-- [ ] "New cards ignore review limit" must be set in deck's config.
-    - This is a requirement for the add-on's 'study' feature to work, as otherwise no new cards will be added to the queue.
-    - We could set this option automatically, but then we should probably mention to the user that we did that (and also which deck options this plugin changes, so that user can revert them in case they want to).
-
-- [ ] Check what is the oldest version of the Anki that supports this add-on.
-    - The simplest way to do that would be to check it on different user account, or on Windows.
-    - Though, in theory, an easiest way would be to simply backup the `iglak/Library/Anki2` folder and then just open older versions of Anki.
+This add-on is licensed under the GNU Affero General Public License, version 3 (AGPL-3.0). You can find a copy of the license in the [LICENSE](LICENSE) file.
