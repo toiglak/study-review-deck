@@ -123,7 +123,7 @@ def on_webview(web_content: WebContent, context: Optional[Any]) -> None:
             reset_limits()
             REFRESH_DECKS = False
             mw.moveToState("deckBrowser")
-        web_content.js.append(f"{WEB_DIRECTORY}/list-buttons.js")
+        web_content.js.append(f"{WEB_DIRECTORY}/deck-buttons.js")
 
     # Append script that shows "learned today" number next to the
     # new cards count in the stats (bottom bar).
