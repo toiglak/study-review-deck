@@ -28,7 +28,7 @@ During a study session, a "Wrap Up" (🏁) button appears next to the "Show Answ
 
 ## Important Information
 
-- This add-on operates by setting "Today only" daily limit for new cards and reviews. If you decide to uninstall this add-on, you may need to manually reset these limits in the deck options.
+- This add-on operates by setting "Today only" daily limit for new cards and reviews in deck options. If you decide to uninstall this add-on, you may need to manually reset these limits in the deck options.
 - Syncing with AnkiWeb during a session may hide today's reviews (as the "Today's limit" will still be set). If this happens, return to the main view (with the deck list) and then sync.
 - The "Study" button does not currently support nested decks.
 - I've shared this add-on because I find it useful, but please note that there may be bugs or things I didn't account for. Also, while it works for me, it may not fit your workflow. Use at your own discretion.
