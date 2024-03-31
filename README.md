@@ -1,4 +1,4 @@
-Compatible with Anki versions: 2.1.61 and above
+Compatible with Anki versions: 2.1.61 and above. Requires Scheduler V3.
 
 ---
 
