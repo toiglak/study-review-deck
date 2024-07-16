@@ -28,7 +28,7 @@ async function main() {
   }
 
   // Remove "New" column.
-  if (config["deck_list_hide_new_count"]) {
+  if (config["deck_list_hide_new_column"]) {
     let rows = document.querySelectorAll("tr");
     for (var row of rows) {
       var td = row.cells[1]; // get the second column
