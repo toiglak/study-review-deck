@@ -1,6 +1,8 @@
 const ADDON_PREFIX = "study_review_deck_buttons_addon";
 
-function main() {
+async function main() {
+  let config = await cmd("get_config");
+
   // Add "Study" and "Review" buttons to each deck.
   let decks = document.querySelectorAll("tr.deck");
   for (var deck of decks) {
@@ -26,12 +28,15 @@ function main() {
   }
 
   // Remove "New" column.
-  let rows = document.querySelectorAll("tr");
-  for (var row of rows) {
-    var td = row.cells[1]; // get the second column
-    if (td) row.removeChild(td); // remove the second column if it exists
+  if (config["deck_list_hide_new_count"]) {
+    let rows = document.querySelectorAll("tr");
+    for (var row of rows) {
+      var td = row.cells[1]; // get the second column
+      if (td) row.removeChild(td); // remove the second column if it exists
+    }
   }
 
+  //
   // Add "Study" and "Review" column headers.
 
   let header = document.querySelector("tbody > tr");
@@ -45,7 +50,7 @@ function main() {
   header.insertBefore(th, header.querySelector(".optscol"));
 }
 
-document.addEventListener("DOMContentLoaded", main);
+on_pycmd_defined(main);
 
 //
 // Utility functions.
@@ -78,5 +83,29 @@ async function cmd(command, ...arg) {
     pycmd(pre(command) + ":" + arg.join(":"), (ret) => {
       resolve(ret);
     });
+  });
+}
+
+// Wait for the pycmd function to be defined.
+async function on_pycmd_defined(callback) {
+  if (typeof pycmd !== "undefined") {
+    callback();
+    return;
+  }
+
+  let called = false;
+  let _pycmd;
+
+  Object.defineProperty(globalThis, "pycmd", {
+    set(value) {
+      _pycmd = value;
+      if (!called) {
+        callback();
+        called = true;
+      }
+    },
+    get() {
+      return _pycmd;
+    },
   });
 }

@@ -32,6 +32,9 @@ def handle_pycmd(handled, cmd, context):
         if current_deck['newToday'][0] == today:
             learned_today = current_deck['newToday'][1]
         return (True, learned_today)
+    if cmd.startswith(pre("get_config")):
+        config = mw.addonManager.getConfig(__name__)
+        return (True, config)
     if cmd.startswith(pre("get_state")):
         return (True, STATE)
 

@@ -35,7 +35,7 @@ async function main() {
   });
 }
 
-window.addEventListener("DOMContentLoaded", main);
+on_pycmd_defined(main);
 
 //
 // Utility functions.
@@ -74,5 +74,29 @@ async function cmd(command, ...arg) {
     pycmd(pre(command) + ":" + arg.join(":"), (ret) => {
       resolve(ret);
     });
+  });
+}
+
+// Wait for the pycmd function to be defined.
+async function on_pycmd_defined(callback) {
+  if (typeof pycmd !== "undefined") {
+    callback();
+    return;
+  }
+
+  let called = false;
+  let _pycmd;
+
+  Object.defineProperty(globalThis, "pycmd", {
+    set(value) {
+      _pycmd = value;
+      if (!called) {
+        callback();
+        called = true;
+      }
+    },
+    get() {
+      return _pycmd;
+    },
   });
 }
