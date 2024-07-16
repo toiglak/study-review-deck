@@ -5,7 +5,7 @@ Compatible with Anki versions: 2.1.61 and above. Requires Scheduler V3.
 # Study-Review Deck
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-blue?logo=github)](https://github.com/toiglak/study-review-deck)
-[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](https://github.com/toiglak/study-review-deck/releases/tag/v0.2.0)
+[![Version](https://img.shields.io/badge/version-0.2.1-blue.svg)](https://github.com/toiglak/study-review-deck/releases/tag/v0.2.1)
 
 
 This add-on allows you to separate the study and review phases of your Anki sessions, by adding "Study" and "Review" buttons for each deck. It is useful when you want to study new cards without being interrupted by reviews.
